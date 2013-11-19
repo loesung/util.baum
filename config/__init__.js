@@ -5,7 +5,7 @@ function config(baum, path){
 
     var index = baum.nodejs.fs.readFileSync(
         path + 'index.json',
-        {encoding: 'ascii'}
+        {encoding: 'utf-8'}
     );
     index = JSON.parse(index);
 
@@ -20,9 +20,10 @@ function config(baum, path){
         } else {
             value = baum.nodejs.fs.readFileSync(
                 path + item.name,
-                {encoding: 'ascii'}
+                {encoding: 'utf-8'}
             );
             value = value.trim();
+            console.log(value);
         };
 
         //XXX verify the types, and so on.
