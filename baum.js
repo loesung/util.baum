@@ -1,7 +1,15 @@
 $ = (function(){
     var self = this;
-    this.nodejs = new require('./nodejs/__init__.js')(self);
 
-    this.ipc = new require('./ipc/__init__.js')(self);
+    var desired = {
+        'nodejs': './nodejs/__init__.js',
+
+        'ipc': './ipc/__init__.js',
+        'config': './config/__init__.js',
+    };
+
+    for(var name in desired)
+        this[name] = new require(desired[name])(self);
+
     return this;
 })();
