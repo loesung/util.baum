@@ -1,6 +1,6 @@
 var packet = require('./packet.js');
 
-function server(baum, socketPath){
+var server = function(baum, socketPath){
     var self = this;
     baum.nodejs.events.EventEmitter.call(this);
 
