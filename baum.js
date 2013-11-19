@@ -4,7 +4,7 @@ $ = (function(){
     var desired = {
         'nodejs': './nodejs/__init__.js',
 
-        'ipc': './ipc/__init__.js',
+        'net': './net/__init__.js',
         'config': './config/__init__.js',
     };
 
