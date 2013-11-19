@@ -1,4 +1,4 @@
-module.exports = (function(){
+module.exports = function(baum){
     var self = this;
 
     var desired = [
@@ -16,4 +16,4 @@ module.exports = (function(){
     };
 
     return this;
-})();
+};
