@@ -1,15 +1,11 @@
-var server = require('./server.js'),
-    client = require('./client.js');
-
 module.exports = function(baum){
     var self = this;
 
-    this.createServer = function(socketPath){
-        return new server(baum, socketPath);
-    };
+    var server = new require('./server.js')(baum),
+        client = new require('./client.js')(baum);
 
-    this.createClient = function(socketPath){
-    };
+    this.createServer = server.createServer;
+    this.createClient = client.createClient;
 
     return this;
 };

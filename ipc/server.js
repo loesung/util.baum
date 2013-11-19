@@ -38,5 +38,14 @@ function server(baum, socketPath){
     return this;
 };
 
-baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
-module.exports = server;
+
+module.exports = function(baum){
+    var self = this;
+    baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
+
+    this.createServer = function(socketPath){
+        return new server(baum, socketPath);
+    };
+
+    return this;
+};

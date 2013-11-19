@@ -25,5 +25,13 @@ function client(baum, socketPath){
     return this;
 };
 
-baum.nodejs.util.inherits(client, baum.nodejs.events.EventEmitter);
-module.exports = client;
+module.exports = function(baum){
+    var self = this;
+    baum.nodejs.util.inherits(client, baum.nodejs.events.EventEmitter);
+    
+    this.createClient = function(socketPath){
+        return new client(baum, socketPath);
+    };
+
+    return this;
+};
