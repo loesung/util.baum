@@ -1,3 +1,20 @@
+function packet(request, response){
+    var self = this;
+
+    this.request = request;
+    this.response = response;
+
+    this.write = function(p1, p2){
+        self.response.write(p1, p2);
+    };
+
+    this.end = function(p){
+        self.response.end(p);
+    };
+
+    return this;
+};
+
 function server(baum, socketPath){
     var self = this;
     baum.nodejs.events.EventEmitter.call(this);
@@ -5,6 +22,7 @@ function server(baum, socketPath){
     var server = null;
 
     function serverLogic(request, response){
+        self.emit('data', new packet(request, response));
     };
 
     this.start = function(){
@@ -19,7 +37,11 @@ function server(baum, socketPath){
             });
         };
 
-        function checkIsSocket(lstatResult){
+        function checkIsSocket(err, lstatResult){
+            if(null != err){
+                self.emit('error');
+                return;
+            };
             if(!lstatResult.isSocket()){
                 self.emit('error');
                 return;
