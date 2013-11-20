@@ -42,11 +42,13 @@ function config(baum, path){
 };
 
 module.exports = function(baum){
-    var self = this;
+    return new function(){
+        var self = this;
 
-    this.createConfig = function(path){
-        return new config(baum, path);
+        this.createConfig = function(path){
+            return new config(baum, path);
+        };
+
+        return this;
     };
-
-    return this;
 };

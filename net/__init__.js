@@ -1,18 +1,20 @@
 module.exports = function(baum){
-    var self = this;
+    return new function(){
+        var self = this;
 
-    var ipcServer = new require('./ipc.server.js')(baum),
-        ipcClient = new require('./ipc.client.js')(baum),
-        httpServer = new require('./http.server.js')(baum);
+        var ipcServer = require('./ipc.server.js')(baum),
+            ipcClient = require('./ipc.client.js')(baum),
+            httpServer = require('./http.server.js')(baum);
 
-    this.IPC = {
-        server: ipcServer.createServer,
-        client: ipcClient.createClient,
+        this.IPC = {
+            server: ipcServer.createServer,
+            client: ipcClient.createClient,
+        };
+
+        this.HTTP = {
+            server: httpServer.createServer,
+        };
+
+        return this;
     };
-
-    this.HTTP = {
-        server: httpServer.createServer,
-    };
-
-    return this;
 };

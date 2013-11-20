@@ -7,7 +7,7 @@ var server = function(baum, port){
     var server = null;
 
     function serverLogic(request, response){
-        self.emit('data', new packet(baum, request, response));
+        self.emit('data', new packet(baum, 'http', request, response));
     };
 
     this.start = function(){
@@ -24,12 +24,14 @@ var server = function(baum, port){
 
 
 module.exports = function(baum){
-    var self = this;
-    baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
+    return new function(){
+        var self = this;
+        baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
 
-    this.createServer = function(port){
-        return new server(baum, port);
+        this.createServer = function(port){
+            return new server(baum, port);
+        };
+
+        return this;
     };
-
-    return this;
 };

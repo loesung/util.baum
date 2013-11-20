@@ -7,7 +7,7 @@ var server = function(baum, socketPath){
     var server = null;
 
     function serverLogic(request, response){
-        self.emit('data', new packet(baum, request, response));
+        self.emit('data', new packet(baum, 'ipc', request, response));
     };
 
     this.start = function(){
@@ -47,12 +47,14 @@ var server = function(baum, socketPath){
 
 
 module.exports = function(baum){
-    var self = this;
-    baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
+    return new function(){
+        var self = this;
+        baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
 
-    this.createServer = function(socketPath){
-        return new server(baum, socketPath);
+        this.createServer = function(socketPath){
+            return new server(baum, socketPath);
+        };
+
+        return this;
     };
-
-    return this;
 };

@@ -9,7 +9,7 @@ $ = (function(){
     };
 
     for(var name in desired)
-        this[name] = new require(desired[name])(self);
+        this[name] = require(desired[name])(self);
 
     return this;
 })();

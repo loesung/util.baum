@@ -26,12 +26,14 @@ var client = function(baum, socketPath){
 };
 
 module.exports = function(baum){
-    var self = this;
-    baum.nodejs.util.inherits(client, baum.nodejs.events.EventEmitter);
-    
-    this.createClient = function(socketPath){
-        return new client(baum, socketPath);
-    };
+    return new function(){
+        var self = this;
+        baum.nodejs.util.inherits(client, baum.nodejs.events.EventEmitter);
+        
+        this.createClient = function(socketPath){
+            return new client(baum, socketPath);
+        };
 
-    return this;
+        return this;
+    };
 };
