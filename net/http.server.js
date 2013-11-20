@@ -7,7 +7,7 @@ var server = function(baum, port){
     var server = null;
 
     function serverLogic(request, response){
-        self.emit('data', new packet(request, response));
+        self.emit('data', new packet(baum, request, response));
     };
 
     this.start = function(){
