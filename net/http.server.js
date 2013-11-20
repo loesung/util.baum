@@ -1,13 +1,12 @@
-var packet = require('./packet.js');
-
 var server = function(baum, port){
     var self = this;
     baum.nodejs.events.EventEmitter.call(this);
+    var packet = require('./packet.js')(baum);
 
     var server = null;
 
     function serverLogic(request, response){
-        self.emit('data', new packet(baum, 'http', request, response));
+        self.emit('data', packet.createPacket('http', request, response));
     };
 
     this.start = function(){
@@ -24,10 +23,9 @@ var server = function(baum, port){
 
 
 module.exports = function(baum){
+    baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
     return new function(){
         var self = this;
-        baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
-
         this.createServer = function(port){
             return new server(baum, port);
         };

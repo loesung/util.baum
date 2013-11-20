@@ -13,6 +13,7 @@ module.exports = function(baum){
             'zlib',
             'buffer',
             'events',
+            'querystring',
         ];
         for(var i in desired){
             this[desired[i]] = require(desired[i]);
