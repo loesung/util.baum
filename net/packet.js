@@ -1,4 +1,36 @@
-var packet = function(baum, protocol, request, response){
+function clientPacket(baum, protocol, response){
+    baum.nodejs.events.EventEmitter.call(this);
+    var self = this;
+
+    this.data = {raw: '', parsed: ''};
+
+    this.response = response;
+    this.response.on('data', function(chunk){
+        if(
+            self.data.raw.length + chunk.length > 1048567
+        ){
+            try{
+                self.response.socket.destory();
+            } catch(e){
+            };
+            self.response.end();
+        } else
+            self.data.raw += chunk;
+    });
+    this.response.on('end', function(){
+        self.data.parsed = 
+            baum.nodejs.querystring.parse(self.data.raw);
+        self.addListener('newListener', function(e, listener){
+            if(e == 'ready')
+                listener(self.data);
+        });
+        self.emit('ready', self.data);
+    });
+
+    return this;
+};
+
+function serverPacket(baum, protocol, request, response){
     baum.nodejs.events.EventEmitter.call(this);
     var self = this;
 
@@ -17,6 +49,7 @@ var packet = function(baum, protocol, request, response){
     };
 
     this.method = this.request.method;
+    this.post = {raw: '', parsed: ''};
 
     /* Bind events to receive the posting data automatically. */
     if(this.method == 'post'){
@@ -47,10 +80,14 @@ var packet = function(baum, protocol, request, response){
 };
 
 module.exports = function(baum){
-    baum.nodejs.util.inherits(packet, baum.nodejs.events.EventEmitter);
+    baum.nodejs.util.inherits(serverPacket, baum.nodejs.events.EventEmitter);
+    baum.nodejs.util.inherits(clientPacket, baum.nodejs.events.EventEmitter);
     return new function(){
-        this.createPacket = function(protocol, req, resp){
-            return new packet(baum, protocol, req, resp);
+        this.createServerPacket = function(protocol, req, resp){
+            return new serverPacket(baum, protocol, req, resp);
+        };
+        this.createClientPacket = function(protocol, resp){
+            return new clientPacket(baum, protocol, resp);
         };
         return this;
     };

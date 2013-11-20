@@ -6,7 +6,7 @@ var server = function(baum, socketPath){
     var server = null;
 
     function serverLogic(request, response){
-        self.emit('data', packet.createPacket('ipc', request, response));
+        self.emit('data', packet.createServerPacket('ipc', request, response));
     };
 
     this.start = function(){
