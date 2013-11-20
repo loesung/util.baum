@@ -2,14 +2,26 @@ var client = function(baum, socketPath){
     var self = this;
     baum.nodejs.events.EventEmitter.call(this);
 
-    this.request = function(){
+    this.request = function(path, options){
+        var requestOptions = {
+            path: path,
+            socketPath: socketPath,
+            method: 'GET',
+        };
+
+        if(undefined != options.post){
+            requestOptions.method = 'POST';
+        };
+
         var request = http.request(
-            {
-                socketPath: socketPath,
-            },
+            requestOptions,
             function(response){
+                self.response = response;
                 response.on('data', function(chunk){
-                    console.log(chunk);
+                    self.emit('data', chunk);
+                });
+                response.on('end', function(chunk){
+                    self.emit('end', chunk);
                 });
             }
         );
@@ -18,7 +30,7 @@ var client = function(baum, socketPath){
             console.log('ERR',e);
         });
 
-        request.write('data');
+        if(undefined != options.post) request.write(options.post);
         request.end();
     };
 
@@ -26,10 +38,9 @@ var client = function(baum, socketPath){
 };
 
 module.exports = function(baum){
+    baum.nodejs.util.inherits(client, baum.nodejs.events.EventEmitter);
     return new function(){
         var self = this;
-        baum.nodejs.util.inherits(client, baum.nodejs.events.EventEmitter);
-        
         this.createClient = function(socketPath){
             return new client(baum, socketPath);
         };
