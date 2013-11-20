@@ -14,6 +14,7 @@ module.exports = function(baum){
             'buffer',
             'events',
             'querystring',
+            'async',
         ];
         for(var i in desired){
             this[desired[i]] = require(desired[i]);

@@ -23,10 +23,20 @@ function config(baum, path){
                 {encoding: 'utf-8'}
             );
             value = value.trim();
-            console.log(value);
         };
 
         //XXX verify the types, and so on.
+        try{
+            switch(item.type){
+                case('json'):
+                    value = JSON.parse(value);
+                    break;
+                default:
+                    break;
+            };
+        } catch (e){
+            value = undefined;
+        }
 
         if(undefined != value) got[item.name] = value;
     };
