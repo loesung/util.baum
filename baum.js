@@ -6,6 +6,7 @@ $ = (function(){
 
         'net': './net/__init__.js',
         'config': './config/__init__.js',
+        'global': './global/__init__.js',
     };
 
     for(var name in desired)
