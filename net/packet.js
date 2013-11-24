@@ -48,7 +48,7 @@ function serverPacket(baum, protocol, request, response){
         self.response.end(p);
     };
 
-    this.method = this.request.method;
+    this.method = this.request.method.toLowerCase();
     this.post = {raw: '', parsed: ''};
 
     /* Bind events to receive the posting data automatically. */
