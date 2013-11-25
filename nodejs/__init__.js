@@ -17,6 +17,7 @@ module.exports = function(baum){
             'async',
             'buffalo',
             'msgpack',
+            'sqlite3',
         ];
         for(var i in desired){
             this[desired[i]] = require(desired[i]);
