@@ -31,10 +31,14 @@ function config(baum, path){
                 case('json'):
                     value = JSON.parse(value);
                     break;
+                case('path'):
+                    value = $.nodejs.url.resolve(process.argv[1], value);
+                    break;
                 default:
                     break;
             };
         } catch (e){
+            console.log(e);
             value = undefined;
         }
 
