@@ -14,13 +14,19 @@ module.exports = function(baum){
             'buffer',
             'events',
             'querystring',
+
             'async',
             'buffalo',
             'msgpack',
             'sqlite3',
+            'memwatch',
         ];
         for(var i in desired){
-            this[desired[i]] = require(desired[i]);
+            try{
+                this[desired[i]] = require(desired[i]);
+            } catch(e){
+                this[desired[i]] = null;
+            };
         };
 
         return this;
