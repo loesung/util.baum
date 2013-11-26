@@ -3,6 +3,7 @@ $ = (function(){
 
     var desired = {
         'nodejs': './nodejs/__init__.js',
+        'types': './types/__init__.js',
 
         'net': './net/__init__.js',
         'config': './config/__init__.js',
