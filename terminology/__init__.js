@@ -4,9 +4,10 @@
 var woerterbuch = [
     'ciphertext',
     'plaintext',
-    'compress.method',
+    'compress.algorithm',
     'compress.use',
     'key',
+    'key.hint',
     'hmac',
 ];
 
