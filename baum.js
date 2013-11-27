@@ -9,6 +9,7 @@ $ = new function(){
         'config': './config/__init__.js',
         'global': './global/__init__.js',
         'process': './process/__init__.js',
+        'terminology': './terminology/__init__.js',
     };
 
     for(var name in desired)
