@@ -17,3 +17,5 @@ $ = new function(){
 
     return this;
 };
+
+require('./javascript/__init__.js')();
