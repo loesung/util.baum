@@ -3,6 +3,7 @@ module.exports = function(baum){
         var self = this;
 
         this.bytes = function(length, callback){
+            // use different sources
             var task = [
                 function(rueckruf){
                     baum.nodejs.crypto.randomBytes(length, rueckruf);
@@ -10,7 +11,7 @@ module.exports = function(baum){
 
                 function(rueckruf){
                     var hrtimes = [];
-                    for(var i=0; i<Math.ceil(length / 10); i++)
+                    for(var i=0; i<length; i++)
                         hrtimes.push(process.hrtime());
                     rueckruf(
                         null,
@@ -18,7 +19,15 @@ module.exports = function(baum){
                     );
                 },
 
+                function(rueckruf){
+                    rueckruf(null, new $.nodejs.buffer.Buffer([
+                        process.uptime(),
+                        process.memoryUsage().rss,
+                    ].toString()));
+                },
             ];
+
+            // work out and use PDKDF to improve quality.
             baum.nodejs.async.parallel(task, function(err, result){
                 if(null != err){
                     callback(err);
