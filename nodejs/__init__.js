@@ -20,6 +20,7 @@ module.exports = function(baum){
             'msgpack',
             'sqlite3',
             'memwatch',
+            'uuid',
         ];
         for(var i in desired){
             try{

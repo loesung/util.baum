@@ -4,6 +4,7 @@ module.exports = function(){
         return function(){
             var msg = type + '\n' + this.toString() + '\n';
             $.nodejs.util.log(msg);
+            return new Error(msg);
         };
     };
 
