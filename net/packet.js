@@ -18,8 +18,12 @@ function clientPacket(baum, protocol, response){
             self.data.raw += chunk;
     });
     this.response.on('end', function(){
-        self.data.parsed = 
-            baum.nodejs.querystring.parse(self.data.raw);
+        try{
+            self.data.parsed = 
+                baum.nodejs.querystring.parse(self.data.raw);
+        } catch(e) {
+            self.data.parsed = null;
+        };
         self.addListener('newListener', function(e, listener){
             if(e == 'ready')
                 listener(self.data);
