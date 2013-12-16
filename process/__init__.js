@@ -19,6 +19,13 @@ module.exports = function(baum){
         this.memoryUsage = process.memoryUsage;
         this.uptime = process.uptime;
 
+        this.resolvePath = function(to){
+            return baum.nodejs.path.resolve(
+                baum.nodejs.path.dirname(process.argv[1]),
+                to
+            );
+        };
+
         return this;
     };
 };

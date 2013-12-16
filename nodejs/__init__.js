@@ -7,6 +7,7 @@ module.exports = function(baum){
             'https',
             'util',
             'os',
+            'path',
             'fs',
             'url',
             'crypto',
