@@ -19,18 +19,40 @@ module.exports = function($){
     return new function(){
         var self = this;
 
-        this.get = {identity: {}};
-        this.check = {identity: {}};
+        this.get = {identity: {}, tunnel: {}};
+        this.check = {identity: {}, tunnel: {}};
         this.definition = {
             identity: {
                 id: '[0-9a-f]{128}',
                 name: '[0-9a-zA-Z_\\(\\)\\[\\]\\.]{5,64}',
+            },
+            tunnel: {
+                id: '(internet|satellite|mobile).(im|email|web|etc).([a-z0-9]+).([0-9a-fA-F]+)\-([0-9a-fA-F]{16})',
+                description: '[a-zA-z0-9\\s\\.\\?,;:\\(\\)\\-_]+',
             },
         };
 
         this.get.identity.id = function(name){
             if(!self.check.identity.name(name)) return false;
             return standardHash(name, 'identity-id'); 
+        };
+
+        this.get.tunnel.id = function(id){
+            var exec = 
+                new RegExp('^' + self.definition.tunnel.id + '$').exec(id);
+            if(!exec) return false;
+            return {
+                catalog: exec[1],
+                method: exec[2],
+                protocol: exec[3],
+                sequence: exec[4],
+                identity: exec[5],
+            };
+        };
+
+        this.get.tunnel.description = function(desc){
+            if(!self.check.tunnel.description(desc)) return false;
+            return desc;
         };
 
         this.check.identity.id = function(id){
@@ -44,6 +66,20 @@ module.exports = function($){
             return (
                 new RegExp('^' + self.definition.identity.name + '$')
                 .test(name)
+            );
+        };
+
+        this.check.tunnel.id = function(id){
+            return (
+                new RegExp('^' + self.definition.tunnel.id + '$')
+                .test(id)
+            );
+        };
+
+        this.check.tunnel.description = function(desc){
+            return (
+                new RegExp('^' + self.definition.tunnel.description + '$')
+                .test(desc)
             );
         };
     };
