@@ -37,17 +37,12 @@ module.exports = function($){
             return standardHash(name, 'identity-id'); 
         };
 
-        this.get.tunnel.id = function(id){
+        this.get.tunnel.id = function(a,b,c,d,e){
+            var id = a + '.' + b + '.' + c + '.' + d + '-' + e;
             var exec = 
                 new RegExp('^' + self.definition.tunnel.id + '$').exec(id);
             if(!exec) return false;
-            return {
-                catalog: exec[1],
-                method: exec[2],
-                protocol: exec[3],
-                sequence: exec[4],
-                identity: exec[5],
-            };
+            return id;
         };
 
         this.get.tunnel.description = function(desc){
