@@ -12,4 +12,12 @@ module.exports = function(){
     String.prototype.ERROR = report('ERROR');
     String.prototype.WARNING = report('WARNING');
     String.prototype.NOTICE = report('NOTICE');
+
+    String.prototype.startsWith = function(str){
+        return (this.toString().substr(0, str.length) == str);
+    };
+ 
+    String.prototype.endsWith = function(str){
+        return (this.toString().substr(-str.length) == str);
+    };
 };
