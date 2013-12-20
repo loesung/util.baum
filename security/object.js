@@ -65,10 +65,18 @@ module.exports = function($){
         };
 
         this.check.tunnel.id = function(id){
-            return (
+            var parsed = (
                 new RegExp('^' + self.definition.tunnel.id + '$')
-                .test(id)
+                .exec(id)
             );
+            if(null == parsed) return false;
+            return {
+                catalog: parsed[1],
+                method: parsed[2],
+                protocol: parsed[3],
+                sequence: parsed[4],
+                identity: parsed[5],
+            };
         };
 
         this.check.tunnel.description = function(desc){
