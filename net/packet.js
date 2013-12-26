@@ -72,7 +72,7 @@ function serverPacket(baum, protocol, request, response){
         });
         this.request.on('end', function(){
             self.post.parsed = 
-                baum.nodejs.querystring.parse(self.post.raw);
+                baum.nodejs.querystring.parse(self.post.raw.trim());
             self.addListener('newListener', function(e, listener){
                 if(e == 'ready')
                     listener(self.post);

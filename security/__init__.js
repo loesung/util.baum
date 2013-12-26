@@ -5,6 +5,7 @@ module.exports = function(baum){
         this.uuid = require('./uuid.js')(baum);
         this.random = require('./random.js')(baum);
 
-        this.object = require('./object.js')(baum);
+//        :: deprecated ::
+//        this.object = require('./object.js')(baum);
     };
 };

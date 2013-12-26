@@ -45,7 +45,9 @@ function router($){
         };
     };
 
-    find.handle = function(name, func){
+    find.handle = function(name, func, options){
+        if(undefined != options)
+            func.__options = options;
         handlers[name] = func;
     };
 
