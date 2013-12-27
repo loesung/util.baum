@@ -49,10 +49,12 @@ function router($){
         if(undefined != options)
             func.__options = options;
         handlers[name] = func;
+        return find;
     };
 
     find.sub = function(name, subRouter){
         subRouters[name] = subRouter;
+        return find;
     };
 
     return find;
