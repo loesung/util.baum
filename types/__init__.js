@@ -2,6 +2,10 @@ module.exports = function(baum){
     return new function(){
         var self = this;
 
+        this.isError = function(v){
+            return toString.apply(v) === '[object Error]';
+        };
+
         this.isArray = function(v){
             return toString.apply(v) === '[object Array]';
         };
