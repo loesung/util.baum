@@ -1,5 +1,5 @@
 /*
- * a chainable router, aka handler finder.
+ * a chainable router, aka handler(a function) finder.
  *
  * /a       will be handled at the 1st handler, and return the function
  *          registered under name 'a'.
@@ -37,11 +37,11 @@ function router($){
         if(next){
             // take 'current' as the name of a subRouter.
             if(undefined == subRouters[current]) return false;
-            return subRouters[current](next);
+            return find.proxy(subRouters[current](next));
         } else {
             // take 'current' as the name of a handler.
             if(undefined == handlers[current]) return false;
-            return handlers[current];
+            return find.proxy(handlers[current]);
         };
     };
 
@@ -55,6 +55,21 @@ function router($){
     find.sub = function(name, subRouter){
         subRouters[name] = subRouter;
         return find;
+    };
+
+
+    /*
+     * the Router is a function searcher, which searches in a chained tree
+     * the required function.
+     *
+     * by setting this proxy function, the searched function can be altered.
+     * this is useful if we want a generic template applies.
+     *
+     * the returned new function and the searched function should have same
+     * signature, aka the same variables by input.
+     */
+    find.proxy = function(gotFunc){
+        return gotFunc;
     };
 
     return find;
