@@ -9,10 +9,24 @@ var client = function(baum, socketPath){
             socketPath: socketPath,
             method: 'GET',
         };
-        if(undefined == options) options = {};
 
-        if(undefined != options.post){
-            requestOptions.method = 'POST';
+        if(undefined != options){
+            var headers = {};
+
+            if(undefined != options.post){
+                requestOptions.method = 'POST';
+            };
+
+            if(undefined != options.auth){
+                headers['Authorization'] = 
+                    'Basic ' + new $.nodejs.buffer.Buffer(
+                        options.auth.username + ':'
+                        + options.auth.password
+                    ).toString('base64')
+                ;
+            };
+
+            if(headers) requestOptions.headers = headers;
         };
 
         var request = baum.nodejs.http.request(
@@ -26,7 +40,7 @@ var client = function(baum, socketPath){
             callback(e, null);
         });
 
-        if(undefined != options.post) request.write(options.post);
+        if(options && undefined != options.post) request.write(options.post);
         request.end();
     };
 
