@@ -20,10 +20,11 @@ module.exports = function(baum){
                 },
 
                 function(rueckruf){
-                    rueckruf(null, new $.nodejs.buffer.Buffer([
+                    rueckruf(null, new $.nodejs.buffer.Buffer(JSON.stringify([
+                        baum.nodejs.os.cpus(),
                         process.uptime(),
                         process.memoryUsage().rss,
-                    ].toString()));
+                    ])));
                 },
             ];
 
