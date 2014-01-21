@@ -16,6 +16,7 @@ module.exports = function(baum){
             'events',
             'querystring',
             'child_process',
+            'stream',
 
             'async',
             'buffalo',
