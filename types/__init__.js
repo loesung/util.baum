@@ -37,5 +37,9 @@ module.exports = function(baum){
         this.isBoolean = function(v){
             return typeof v === 'boolean';
         };
+
+        this.isBuffer = function(v){
+            return baum.nodejs.buffer.Buffer.isBuffer(v);
+        };
     };
 };

@@ -1,3 +1,19 @@
+function protocolServer(baum, ipcServer){
+    var self = this;
+    baum.nodejs.events.EventEmitter.call(this);
+
+    function parseReceived(packet){
+        self.emit(signal, data, function(){
+        });
+    };
+
+    ipcServer.on('data', parseReceived);
+
+    return this;
+};
+
+//////////////////////////////////////////////////////////////////////////////
+
 var server = function(baum, socketPath){
     var self = this;
     baum.nodejs.events.EventEmitter.call(this);
@@ -45,12 +61,20 @@ var server = function(baum, socketPath){
 };
 
 
-module.exports = function(baum){
-    baum.nodejs.util.inherits(server, baum.nodejs.events.EventEmitter);
+module.exports = function($){
+    $.nodejs.util.inherits(server, $.nodejs.events.EventEmitter);
+    $.nodejs.util.inherits(protocolServer, $.nodejs.events.EventEmitter);
+
     return new function(){
         var self = this;
+
         this.createServer = function(socketPath){
-            return new server(baum, socketPath);
+            return new server($, socketPath);
+        };
+
+        this.createProtocolServer = function(socketPath){
+            var ipcServer = new server($, socketPath);
+            return new protocolServer($, ipcServer);
         };
 
         return this;

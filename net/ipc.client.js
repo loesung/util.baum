@@ -1,3 +1,8 @@
+function protocolClient($, ipcClient){
+};
+
+//////////////////////////////////////////////////////////////////////////////
+
 var client = function(baum, socketPath){
     var self = this;
     baum.nodejs.events.EventEmitter.call(this);
