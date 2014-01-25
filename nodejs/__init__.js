@@ -21,6 +21,7 @@ module.exports = function(baum){
             'async',
             'buffalo',
             'msgpack',
+            'asn1.js',
             'sqlite3',
             'memwatch',
             'uuid',

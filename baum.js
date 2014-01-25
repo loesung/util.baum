@@ -10,7 +10,6 @@ $ = new function(){
         'global': './global/__init__.js',
         'security': './security/__init__.js',
         'process': './process/__init__.js',
-        'terminology': './terminology/__init__.js',
     };
 
     for(var name in desired)
