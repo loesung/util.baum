@@ -3,7 +3,31 @@ function protocolServer(baum, ipcServer){
     baum.nodejs.events.EventEmitter.call(this);
 
     function parseReceived(packet){
-        self.emit(signal, data, function(){
+        packet.on('ready', function(data){
+            try{
+                var json = JSON.parse(data.raw);
+                var signal = json.sig,
+                    payload = json.payload;
+                    
+                function callback(err, signal, payload){
+                    if(null != err){
+                        packet.response.writeHead(err);
+                        packet.response.end();
+                        return;
+                    };
+                    var ret = JSON.stringify({
+                        sig: signal,
+                        payload: payload,
+                    });
+                    packet.response.writeHead(200);
+                    packet.response.end(ret);
+                };
+
+                self.emit(signal, payload, callback);
+            } catch(e){
+                self.emit('error', 'bad-json');
+                return;
+            };
         });
     };
 
