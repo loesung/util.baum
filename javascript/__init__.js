@@ -21,10 +21,16 @@ module.exports = function(){
         return (this.toString().substr(-str.length) == str);
     };
 
-    Object.prototype.has_key = function(key){
-        var keys = Object.keys(this);
-        for(var i in keys)
-            if(keys[i] == key) return true;
-        return false;
-    };
+    Object.defineProperty(
+        function(key){
+            var keys = Object.keys(this);
+            for(var i in keys)
+                if(keys[i] == key) return true;
+            return false;
+        },
+        'hasKey',
+        {
+            enumerable: false,
+        }
+    );
 };
