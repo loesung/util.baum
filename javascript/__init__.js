@@ -20,4 +20,11 @@ module.exports = function(){
     String.prototype.endsWith = function(str){
         return (this.toString().substr(-str.length) == str);
     };
+
+    Object.prototype.has_key = function(key){
+        var keys = Object.keys(this);
+        for(var i in keys)
+            if(keys[i] == key) return true;
+        return false;
+    };
 };
